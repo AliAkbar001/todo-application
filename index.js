@@ -1,7 +1,14 @@
 const express = require('express')
 const app = express()
+const mongoose = require('mongoose')
+const CONNECTION_URL = "mongodb+srv://ali:ali7676@cluster0.ozphx.mongodb.net/item-database?retryWrites=true&w=majority";
+
+mongoose.connect(CONNECTION_URL).then(()=>
+    console.log('Connected'),
+    app.listen(3000)
+).catch(err=>console.log(err))
 app.set('view engine', 'ejs')
-app.listen(3000)
+
 
 app.get('/',(req,res)=>{
     //res.sendFile("./views/index.html", {root:__dirname})
