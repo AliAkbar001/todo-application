@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Item = require('./model');
 const CONNECTION_URL = "mongodb+srv://ali:ali7676@cluster0.ozphx.mongodb.net/item-database?retryWrites=true&w=majority";
 
 mongoose.connect(CONNECTION_URL).then(()=>
@@ -18,6 +19,10 @@ app.get('/',(req,res)=>{
         {name: 'Computer',price: 5000 }
     ]
     res.render('index',{items})
+})
+
+app.get('/get-items',(req,res)=>{
+   Item.find().then(result => res.send(result)).catch(err=>console.log(err))
 })
 
 app.get('/add-item',(req,res)=>{
