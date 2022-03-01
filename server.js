@@ -19,8 +19,8 @@ app.get('/',(req,res)=>{
 app.get('/get-items',(req,res)=>{
    Item.find().then(result => res.render('index',{items:result})).catch(err=>console.log(err))
 })
-app.get('/get-item',(req,res)=>{
-    Item.find().then(result => res.send(result)).catch(err=>console.log(err))
+app.get('/view-item/:id',(req,res)=>{
+    Item.findById(req.params.id).then(item => res.render('view-item',{item})).catch(err=>console.log(err))
 })
 app.get('/add-item',(req,res)=>{
     //res.sendFile("./views/add-item.html", {root:__dirname})
@@ -36,3 +36,7 @@ app.use((req,res)=>{
    // res.sendFile("./views/error.html", {root:__dirname})
    res.render('error')
 })
+//Redirect for url
+//SendFile
+//Render for js file
+//Send
