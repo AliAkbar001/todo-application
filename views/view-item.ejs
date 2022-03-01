@@ -13,7 +13,18 @@
            <h5><%= item.createdAt%></h5>
            <h5><%= item.updatedAt%></h5>
        </div>
-       <a class="delete btn" href="/">Delete</a>
+       <a class="delete btn" id="deleteBtn" data-id="<%= item._id%>" href="">Delete</a>
     </div>
+    <script>
+        deleteBtn.onclick = function(e){
+            e.preventDefault()
+            //const id = deleteBtn.dataset.id;
+            const id = e.target.getAttribute('data-id');
+            const endpoint = `/delete-item/${id}`;
+            fetch(endpoint,{
+                method:'DELETE'
+            }).then(res=> res.json()).then(data => window.location.href = data.redirect).catch(()=>{})
+        }
+    </script>
 </body>
 </html>

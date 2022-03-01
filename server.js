@@ -22,6 +22,9 @@ app.get('/get-items',(req,res)=>{
 app.get('/view-item/:id',(req,res)=>{
     Item.findById(req.params.id).then(item => res.render('view-item',{item})).catch(err=>console.log(err))
 })
+app.delete('/delete-item/:id',(req,res)=>{
+    Item.findByIdAndDelete({_id:req.params.id}).then(() => res.json({redirect:'/'})).catch(err=>console.log(err))
+})
 app.get('/add-item',(req,res)=>{
     //res.sendFile("./views/add-item.html", {root:__dirname})
     res.render('add-item')
