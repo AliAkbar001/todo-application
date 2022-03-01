@@ -10,7 +10,7 @@
             <form class="col s12" action="/item" method="POST">
                 <div class="row">
                     <div class="input-field col s6">
-                        <i class="material-icons prefix">shopping cart</i>
+                        <i class="material-icons prefix">shopping_cart</i>
                         <input id="item_name" type="text" class="validate" name="name">
                         <label for="item_name">Item Name</label>
                     </div>
@@ -24,8 +24,13 @@
             </form>
         </div>
     </div>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+  M.updateTextFields()
+});
+    </script>
 </body>
 
 </html>
