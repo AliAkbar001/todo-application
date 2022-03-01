@@ -34,6 +34,9 @@ app.post('/item',(req,res)=>{
     const item = Item(req.body)
     item.save().then(() => res.redirect('/')).catch(err=>console.log(err))
 })
+app.put('/edit-item/:id',(req,res)=>{
+    Item.findByIdAndUpdate(req.params.id, req.body).then(() => res.json({msg:'Update Successfully'})).catch(err=>console.log(err))
+})
 
 app.use((req,res)=>{
    // res.sendFile("./views/error.html", {root:__dirname})

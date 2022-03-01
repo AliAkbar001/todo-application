@@ -13,10 +13,15 @@
             <%  items.forEach(item => { %>
             <li class="collection-item">
                 <div>
-                    <a href="/view-item/<%= item._id%>"><%= item.name%> $<%= item.price%></a>
-                    <a href="#!" class="secondary-content">
-                        <i class="material-icons">delete</i>
-                        <i class="material-icons">edit</i>
+                    <a href="/view-item/<%= item._id%>">
+                        <%= item.name%> 
+                        $<%= item.price%>
+                    </a>
+                    <a href="#editBox" class="secondary-content modal-trigger">
+                        <i class="material-icons" id="editBtn" data-id="<%= item._id %>">edit</i>
+                    </a>
+                    <a class="secondary-content" href="">
+                        <i class="material-icons" id="deleteBtn" data-id="<%= item._id%>">delete</i>
                     </a>
                 </div>
             </li>
@@ -30,7 +35,57 @@
         </ul>
     </div>
 
+     <!-- Modal Structure -->
+<div id="editBox" class="modal">
+    <div class="modal-content">
+        <h4>Edit Form</h4>
+        <form action="/edit-item" method="PUT" id="editForm">
+            <input id="item_name" type="text" placeholder="Item Name" name="name">
+            <input id="price" type="tel" placeholder="Item Price" name="price">
+            <button class="btn">Edit Item</button>
+        </form>
+    </div>
+</div>
+<script>
+    var updateID;
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+    });
+    deleteBtn.onclick = function(e){
+        e.preventDefault()
+        //const id = deleteBtn.dataset.id;
+        const id = e.target.getAttribute('data-id');
+        const endpoint = `/delete-item/${id}`;
+        fetch(endpoint,{
+            method:'DELETE'
+        })
+        .then(res=> res.json())
+        .then(data => window.location.href = data.redirect)
+        .catch(error=>console.log(error))
+    }
 
+    editBtn.onclick = function(e){
+        e.preventDefault()
+        updateID = e.target.getAttribute('data-id');
+        console.log(updateID)
+    }
+
+    editForm.onsubmit = async function(e){
+        e.preventDefault();
+        let data = new FormData(editForm);
+        let response = await fetch(`/edit-item/${updateID}`,{
+            method: 'PUT',
+            body: new URLSearchParams(data),
+            headers: new Headers({
+                'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            })
+        })
+        let result = await response.json()
+        editForm.reset()
+        window.location.reload()
+        alert(result.msg)
+    }
+</script>
 </body>
-
 </html>
