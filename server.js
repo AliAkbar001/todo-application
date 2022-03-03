@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose');
 const Item = require('./model');
-const CONNECTION_URL = "mongodb+srv://ali:ali7676@cluster0.ozphx.mongodb.net/item-database?retryWrites=true&w=majority";
+const CONNECTION_URL = 'Add Your Database String';
 
 mongoose.connect(CONNECTION_URL).then(()=>
     console.log('Connected'),
